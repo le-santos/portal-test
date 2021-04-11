@@ -4,9 +4,6 @@ class PowerGeneratorsController < ApplicationController
   end
   
   def search
-    p '===== SEARCH params ======'
-    p search_params
-
     if search_params.values.any?(&:present?)
       @power_generators = PowerGenerator.search(search_params)
     else
@@ -17,6 +14,6 @@ class PowerGeneratorsController < ApplicationController
   private
 
   def search_params
-    params.require(:search).permit(:structure_type, :manufacturer)
+    params.require(:search).permit(:simple_query, :structure_type, :manufacturer)
   end
 end

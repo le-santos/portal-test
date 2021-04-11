@@ -19,11 +19,14 @@ class PowerGenerator < ApplicationRecord
     p query
     filtered_query = query.select { |key, value| !value.blank? }
     p filtered_query
-    
-    if filtered_query.include?(:manufacturer)
+
+    if filtered_query.include?(:simple_query)
+      simple = filtered_query[:simple_query]
+      @power_generators = self.where('name ILIKE ?', "%#{simple}%")
+    elsif filtered_query.include?(:manufacturer)
       manufacturer_query = self.where("manufacturer ILIKE ?", "#{filtered_query[:manufacturer]}")
       return @power_generator = manufacturer_query unless filtered_query.include?(:structure_type)
-      
+
       @power_generators = manufacturer_query.where(structure_type: filtered_query[:structure_type])
     else
       @power_generators = self.where(filtered_query) 
