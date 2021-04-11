@@ -16,20 +16,30 @@
       </div>
     </div>
 
-    <%= form_tag do %>
-      <div class="simple-form">
-        <div class="simple-form__input">
-          <input class="form-control form-control-lg" type="text" placeholder="o que procura?">
-        </div>
-        <div class="simple-form__btn">
-          <button type="submit" class="btn btn-outline-primary btn-lg">Pesquisar</button>
-        </div>
+    <div class="simple-form">
+      <div class="simple-form__input">
+        <%= form_with url: search_path, method: :get, class: "simple" do |f| %>
+          <%= f.label :query, "Busca Simples" %>
+          <%= f.text_field :query, placeholder: "o que procura?", class: "form-control form-control-lg" %>
+          <div class="simple-form__btn">
+            <%= f.submit 'Pesquisar', class:"btn btn-outline-primary btn-lg" %>
+          </div>
+        <% end %>
       </div>
+    </div>
 
-      <div class="advanced-form" style="display:none;">
-        Entradas do usuário para pesquisar uma coleção de geradores de energia com base nas recomendações fornecidas e melhor custo de frete.
-      </div>
-    <% end %>
+      <%# Entradas do usuário para pesquisar uma coleção de geradores de 
+          energia com base nas recomendações fornecidas e melhor custo de frete.%>
+    <div class="advanced-form" style="display:none;">
+      <%= form_with scope: :search, url: search_path, method: :get, class: "advanced", local: true do |f| %>
+        <%= f.label :structure_type, "Estrutura" %>
+        <%= f.select :structure_type, 
+            PowerGenerator.structure_types.keys.map.with_index {|key, index| [t(key), index] } %>
+        <div class="simple-form__btn">
+          <%= f.submit 'Pesquisar', class:"btn btn-outline-primary btn-lg" %>
+        </div>
+      <% end %>
+    </div>
   </div>
 
   <div class="container" >
