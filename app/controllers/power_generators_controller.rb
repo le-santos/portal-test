@@ -5,17 +5,18 @@ class PowerGeneratorsController < ApplicationController
   
   def search
     p '===== SEARCH params ======'
-    p search_params[:structure_type]
+    p search_params
 
-    if search_params[:structure_type]
-      @power_generators = PowerGenerator.where(structure_type: search_params[:structure_type])
+    if search_params.values.any?(&:present?)
+      @power_generators = PowerGenerator.search(search_params)
     else
-      @power_generators = PowerGenerator.all
+      @power_generators = []
     end
   end
 
   private
+
   def search_params
-    params.require(:search).permit(:structure_type)
+    params.require(:search).permit(:structure_type, :manufacturer)
   end
 end

@@ -21,6 +21,7 @@
         <%= form_with url: search_path, method: :get, class: "simple" do |f| %>
           <%= f.label :query, "Busca Simples" %>
           <%= f.text_field :query, placeholder: "o que procura?", class: "form-control form-control-lg" %>
+          
           <div class="simple-form__btn">
             <%= f.submit 'Pesquisar', class:"btn btn-outline-primary btn-lg" %>
           </div>
@@ -34,7 +35,12 @@
       <%= form_with scope: :search, url: search_path, method: :get, class: "advanced", local: true do |f| %>
         <%= f.label :structure_type, "Estrutura" %>
         <%= f.select :structure_type, 
-            PowerGenerator.structure_types.keys.map.with_index {|key, index| [t(key), index] } %>
+            PowerGenerator.structure_types.keys.map.with_index {|key, index| [t(key), index] }, 
+            {include_blank: true} %>
+        
+        <%= f.label :manufacturer, "Fabricante" %>
+        <%= f.text_field :manufacturer %>
+        
         <div class="simple-form__btn">
           <%= f.submit 'Pesquisar', class:"btn btn-outline-primary btn-lg" %>
         </div>

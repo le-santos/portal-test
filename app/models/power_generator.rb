@@ -14,4 +14,13 @@ class PowerGenerator < ApplicationRecord
     trapezoidal
   ]
 
+  def self.search(query)
+    p '### SEARCH method ###'
+    p query
+    filtered_query = query.select { |key, value| value.present? }
+    p filtered_query
+    @power_generators = self.where(filtered_query) 
+    
+  end
+
 end
