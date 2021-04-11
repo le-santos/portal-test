@@ -17,9 +17,17 @@ class PowerGenerator < ApplicationRecord
   def self.search(query)
     p '### SEARCH method ###'
     p query
-    filtered_query = query.select { |key, value| value.present? }
+    filtered_query = query.select { |key, value| !value.blank? }
     p filtered_query
-    @power_generators = self.where(filtered_query) 
+    
+    if filtered_query.include?(:manufacturer)
+      manufacturer_query = self.where("manufacturer ILIKE ?", "#{filtered_query[:manufacturer]}")
+      return @power_generator = manufacturer_query unless filtered_query.include?(:structure_type)
+      
+      @power_generators = manufacturer_query.where(structure_type: filtered_query[:structure_type])
+    else
+      @power_generators = self.where(filtered_query) 
+    end
     
   end
 

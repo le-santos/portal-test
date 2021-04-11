@@ -63,8 +63,8 @@ describe 'user searches power generators', js: true do
       end
     end
 
-    xit 'successfully case insensitive' do
-      FactoryBot.create(:power_generator, {manufacturer: 'Solar Group'})
+    it 'successfully case insensitive' do
+      FactoryBot.create(:power_generator, {manufacturer: 'WEG'})
   
       visit root_path
       choose 'Pesquisa Avançada'
@@ -81,6 +81,27 @@ describe 'user searches power generators', js: true do
     end
   end
 
-  context 'with mixed params' do
+  context 'with multiple params' do
+    it 'successfully' do
+      FactoryBot.create(:power_generator, {manufacturer: 'WEG', structure_type: :laje})
+      FactoryBot.create(:power_generator, {manufacturer: 'Q Cells', structure_type: :laje})
+      FactoryBot.create(:power_generator, {manufacturer: 'WEG', structure_type: :solo})
+  
+      visit root_path
+      choose 'Pesquisa Avançada'
+      within 'form.advanced' do
+        fill_in 'Fabricante', with: 'WEG'
+        select 'Laje', from: 'search_structure_type'
+        click_on 'Pesquisar'
+      end
+  
+      expect(current_path).to eq search_path
+      within 'div.search-results' do
+        expect(page).to have_content(/weg/i)
+        expect(page).not_to have_content(/solar group/i)
+        expect(page).not_to have_content(/q cells/i)
+        expect(page).not_to have_content(/solo/i)
+      end
+    end
   end
 end
