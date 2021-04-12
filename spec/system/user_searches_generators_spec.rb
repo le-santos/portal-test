@@ -50,7 +50,7 @@ describe 'user searches power generators', js: true do
         select 'Laje', from: 'search_structure_type'
         click_on 'Pesquisar'
       end
-  
+      
       expect(current_path).to eq search_path
       within 'div.search-results' do
         expect(page).to have_content(/Laje/i)
@@ -114,6 +114,29 @@ describe 'user searches power generators', js: true do
       within 'div.search-results' do
         expect(page).to have_content(/weg/i)
         expect(page).not_to have_content(/solar group/i)
+      end
+    end
+  end
+
+  context 'by price' do
+    it 'successfully' do
+      FactoryBot.create(:power_generator, {manufacturer: 'WEG', price: 2958.50 })
+      FactoryBot.create(:power_generator, {manufacturer: 'Q CELLS',price: 12223.73})
+      FactoryBot.create(:power_generator, {manufacturer: 'BYD', price: 32223.73})
+
+      visit root_path
+      choose 'Pesquisa Avançada'
+      within 'form.advanced' do
+        select '10.000', from: 'search_price'
+        click_on 'Pesquisar'
+      end
+  
+      expect(current_path).to eq search_path
+      within 'div.search-results' do
+        expect(page).to have_content(/weg/i)
+        expect(page).to have_content('2.958,50')
+        expect(page).not_to have_content(/q cells/i)
+        expect(page).not_to have_content(/byd/i)
       end
     end
   end

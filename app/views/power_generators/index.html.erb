@@ -40,7 +40,16 @@
         
         <%= f.label :manufacturer, "Fabricante" %>
         <%= f.text_field :manufacturer %>
-        
+
+        <%= f.label :price, "Preço máximo" %>
+        <%= f.select :price, 
+              [10000, 20000, 50000].map {|value| [
+                number_to_currency(value, unit: "R$ ", 
+                                          precision: 2, 
+                                          :separator => ",", 
+                                          :delimiter => "."), value ]}, 
+                                          {include_blank: true} %>
+
         <div class="simple-form__btn">
           <%= f.submit 'Pesquisar', class:"btn btn-outline-primary btn-lg" %>
         </div>

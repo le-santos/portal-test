@@ -14,6 +14,6 @@ class PowerGeneratorsController < ApplicationController
   private
 
   def search_params
-    params.require(:search).permit(:simple_query, :structure_type, :manufacturer)
+    params.require(:search).permit(:simple_query, :structure_type, :manufacturer, :price)
   end
 end
