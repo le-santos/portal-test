@@ -7,10 +7,10 @@ Este projeto utiliza:
 - Ruby versão `2.6.3`
 - Rails versão `5.2`
 
-O banco de dados já está com o schema "pré pronto" e algumas informações necessárias o projeto.
-Execute os comandos abaixo:
+O arquivo `bin/setup` está configurado para instalar dependências, criar e popular o banco. 
+Para instalar a aplicação:
 
-`$ bundle exec rails db:create db:migrate db:seed`
+`$ bin/setup`
 
 ### Dependências Adicionadas
 
@@ -27,5 +27,9 @@ Execute os comandos abaixo:
 
 * Calcula custo do Frete: utilizando as informações da tabela de fretes, consulta o preço para determinada localidade. A localidade é definida pelo CEP e identificada utilizando a gem `via_cep` como auxiliar.
 
-O sistema de buscas foi implementado com testes de navegação com Rspec e Capybara.
+### Testes
+
+O sistema de buscas foi implementado com testes de navegação com Rspec e Capybara. Para rodar os testes: 
+
+`rspec`
 
