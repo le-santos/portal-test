@@ -1,0 +1,50 @@
+<div class="searcher gradient">
+  <div class="searcher__radio">
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="searchRadio" id="simpleSearch" value="simple" checked>
+      <label class="form-check-label" for="simpleSearch">Pesquisa Simples</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="searchRadio" id="advancedSearch" value="advanced">
+      <label class="form-check-label" for="advancedSearch">Pesquisa Avançada</label>
+    </div>
+  </div>
+
+  <div class="simple-form">
+    <div class="simple-form__input">
+      <%= form_with scope: :search, url: search_path, method: :get, class: "simple", local: true do |f| %>
+        <%= f.label :simple_query, "Busca Simples" %>
+        <%= f.text_field :simple_query, placeholder: "o que procura?", class: "form-control form-control-lg" %>
+        
+        <div class="simple-form__btn">
+          <%= f.submit 'Pesquisar', class:"btn btn-outline-primary btn-lg" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="advanced-form" style="display:none;">
+    <%= form_with scope: :search, url: search_path, method: :get, class: "advanced", local: true do |f| %>
+      <%= f.label :structure_type, "Estrutura" %>
+      <%= f.select :structure_type, 
+          PowerGenerator.structure_types.keys.map.with_index {|key, index| [t(key), index] }, 
+          {include_blank: true} %>
+      
+      <%= f.label :manufacturer, "Fabricante" %>
+      <%= f.text_field :manufacturer %>
+
+      <%= f.label :price, "Preço máximo" %>
+      <%= f.select :price, 
+            [10000, 20000, 50000].map {|value| [
+              number_to_currency(value, unit: "R$ ", 
+                                        precision: 2, 
+                                        :separator => ",", 
+                                        :delimiter => "."), value ]}, 
+                                        {include_blank: true} %>
+
+      <div class="simple-form__btn">
+        <%= f.submit 'Pesquisar', class:"btn btn-outline-primary btn-lg" %>
+      </div>
+    <% end %>
+  </div>
+</div>
