@@ -11,14 +11,11 @@
   </div>
 
   <div class="simple-form">
-    <div class="simple-form__input">
+    <div>
       <%= form_with scope: :search, url: search_path, method: :get, class: "simple", local: true do |f| %>
         <%= f.label :simple_query, "Busca Simples" %>
         <%= f.text_field :simple_query, placeholder: "o que procura?", class: "form-control form-control-lg" %>
-        
-        <div class="simple-form__btn">
-          <%= f.submit 'Pesquisar', class:"btn btn-outline-primary btn-lg" %>
-        </div>
+        <%= f.submit 'Pesquisar', class:"btn btn-outline-primary btn-lg" %>
       <% end %>
     </div>
   </div>
@@ -42,9 +39,7 @@
                                         :delimiter => "."), value ]}, 
                                         {include_blank: true} %>
 
-      <div class="simple-form__btn">
-        <%= f.submit 'Pesquisar', class:"btn btn-outline-primary btn-lg" %>
-      </div>
+      <%= f.submit 'Pesquisar', class:"btn btn-outline-primary btn-lg" %>
     <% end %>
   </div>
 </div>

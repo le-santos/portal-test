@@ -3,10 +3,10 @@
   <%= render 'shared/search'  %>
 
 
-  <div class="container" >
-    <div class="box card power_generator-card">
+
+    <div class="details">
       <%= image_tag @power_generator.image_url, class: 'power_generator-card__img' %>
-      <div class="power_generator-card__body">
+      <div class="">
         <h2><%= @power_generator.name.upcase %></h2>
         <p class="power_generator-card__price">
           <%= number_to_currency(@power_generator.price, 
@@ -19,19 +19,17 @@
         <p><strong>Descrição: </strong><%= @power_generator.description %></p>
       </div>
     </div>
-  </div>
 
-  <div class='freight-card'>
-    <h3>Calcular Frete</h3>
-    <%= form_with url: get_freight_power_generator_path, method: :get, id: 'freight-form', local: false  do |f| %>
-      <%= f.label :cep, "CEP" %>
-      <%= f.text_field :cep, placeholder: "00000-000", class: "form-control form-control-lg" %>
-      <%= f.submit "Calcular", class: "btn btn-outline-primary btn-lg" %>
-    <% end %>
-
-    <div id="freight-cost">
-      <%=  %>
+    <div class='freight-card'>
+      <h3>Calcular Frete</h3>
+      <%= form_with url: get_freight_power_generator_path, method: :get, id: 'freight-form', local: false  do |f| %>
+        <%= f.label :cep, "CEP" %>
+        <%= f.text_field :cep, placeholder: "00000-000", class: "form-control form-control-lg" %>
+        <%= f.submit "Calcular", class: "btn btn-outline-primary btn-lg" %>
+        <div id="freight-cost"></div>
+      <% end %>
     </div>
-  </div>
+
+  
 </div>
 
