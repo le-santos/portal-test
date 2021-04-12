@@ -143,15 +143,16 @@ describe 'user searches power generators', js: true do
 
   context 'with multiple params' do
     it 'successfully' do
-      FactoryBot.create(:power_generator, {manufacturer: 'WEG', structure_type: :laje})
-      FactoryBot.create(:power_generator, {manufacturer: 'Q Cells', structure_type: :laje})
-      FactoryBot.create(:power_generator, {manufacturer: 'WEG', structure_type: :solo})
+      FactoryBot.create(:power_generator, {manufacturer: 'WEG', structure_type: :laje, price: 15000})
+      FactoryBot.create(:power_generator, {manufacturer: 'Q Cells', structure_type: :laje, price: 12000})
+      FactoryBot.create(:power_generator, {manufacturer: 'WEG', structure_type: :solo, price: 30000})
   
       visit root_path
       choose 'Pesquisa Avançada'
       within 'form.advanced' do
         fill_in 'Fabricante', with: 'WEG'
         select 'Laje', from: 'search_structure_type'
+        select '20.000', from: 'search_price'
         click_on 'Pesquisar'
       end
   
