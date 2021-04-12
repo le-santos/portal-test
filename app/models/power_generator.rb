@@ -15,10 +15,7 @@ class PowerGenerator < ApplicationRecord
   ]
 
   def self.search(query)
-    p '### SEARCH method ###'
-    p query
     filtered_query = query.select { |key, value| !value.blank? }
-    p filtered_query
 
     if filtered_query.include?(:simple_query)
       simple = filtered_query[:simple_query]
